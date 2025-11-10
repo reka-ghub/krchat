@@ -10,4 +10,12 @@ async function impl(e) {
         return networkResponse; // Visszadjuk
     }
 }
+
 self.addEventListener("fetch", e => e.respondWith(impl(e))); // Eseményre feliratkozás
+self.addEventListener("push", e =>  
+    {
+        const text = e.data?.text(); 
+        const promise = self.registration.showNotification("Chat Notification", {body: text});
+        e.waitUntil(promise)
+    }
+);
